@@ -14,27 +14,86 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="selectFile">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>220</y>
+      <x>30</x>
+      <y>390</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>select file</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
+   <widget class="QTextBrowser" name="message">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
-      <width>256</width>
-      <height>192</height>
+      <y>40</y>
+      <width>621</width>
+      <height>231</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="sourcefilepathdisplay">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>320</y>
+      <width>261</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="objectfilepathdisplay">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>320</y>
+      <width>261</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="objectfolder">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>400</y>
+      <width>91</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>object folder</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="copybutton">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>460</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>copy</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="clearmessage">
+    <property name="geometry">
+     <rect>
+      <x>534</x>
+      <y>280</y>
+      <width>91</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>clear message</string>
     </property>
    </widget>
   </widget>
