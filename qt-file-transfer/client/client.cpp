@@ -6,6 +6,7 @@ Client::Client(QWidget *parent) :
     ui(new Ui::Client)
 {
     ui->setupUi(this);
+//    setWindowTitle("file-transfer");
 }
 
 Client::~Client()
@@ -47,7 +48,7 @@ void Client::on_objectfolder_clicked()
 void Client::on_copybutton_clicked()
 {
     if(objectfolderpath.isEmpty() || sourcefilepath.isEmpty()){
-        ui->message->append(sourcefilepath + " or " + objectfolderpath +" is error!");
+        ui->message->append("source file path or object folder path is error!");
         return;
     }
 
