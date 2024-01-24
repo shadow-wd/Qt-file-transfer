@@ -6,15 +6,24 @@ Client::Client(QWidget *parent) :
     ui(new Ui::Client)
 {
     ui->setupUi(this);
-//    setWindowTitle("file-transfer");
+
+
+    Client::p_socket = new QTcpSocket(this);
+
+    // default config
+    ui->ipaddr->setPlainText("172.16.151.129");
+    ui->portnumber->setPlainText("6666");
+
+    isconnect = false;
+
 }
 
 Client::~Client()
 {
     delete ui;
     sourcefilepath="";
-    objectfolderpath="";
 }
+
 
 void Client::on_selectFile_clicked()
 {
@@ -32,44 +41,23 @@ void Client::on_selectFile_clicked()
 
 }
 
-void Client::on_objectfolder_clicked()
-{
-    objectfolderpath = QFileDialog::getExistingDirectory(
-                                this,
-                                tr("选择目标文件夹:"),
-                                QDir::homePath()
-                                );
-
-    if(!objectfolderpath.isEmpty()){
-        ui->objectfilepathdisplay->setText(objectfolderpath);
-    }
-}
 
 void Client::on_copybutton_clicked()
 {
-    if(objectfolderpath.isEmpty() || sourcefilepath.isEmpty()){
-        ui->message->append("source file path or object folder path is error!");
+    if(sourcefilepath.isEmpty()){
+        ui->message->append("source file path is error!");
         return;
     }
 
     QFile sourceFile(sourcefilepath);
-    QFileInfo sourceFileInfo(sourceFile);
-    QString reobjectfolderpath = objectfolderpath + "/" + sourceFileInfo.fileName();
-    qDebug() << reobjectfolderpath;
-    QFile destinationFile(reobjectfolderpath);
 
     if(sourceFile.open(QIODevice::ReadOnly)){
-        if(destinationFile.open(QIODevice::WriteOnly)){
-            // 从源文件读取数据并写入目标文件
-            QByteArray data = sourceFile.readAll();
-            destinationFile.write(data);
 
-            // 关闭文件
-            destinationFile.close();
-        }else{
-            qDebug("object file open fail\n");
-            return;
+        while (!sourceFile.atEnd()) {
+            QByteArray data = sourceFile.read(1024);  // 读取数据块
+            p_socket->write(data);          // 发送数据
         }
+
         sourceFile.close();
     }else{
         qDebug("source file open fail\n");
@@ -85,7 +73,56 @@ void Client::on_clearmessage_clicked()
     ui->message->clear();
 }
 
+
+void Client::on_connect_clicked()
+{
+    QString userInput = ui->ipaddr->toPlainText();
+    QString userport = ui->portnumber->toPlainText();
+
+
+
+    QRegExp ipRegex("\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b");
+    if (!ipRegex.exactMatch(userInput)) {
+        // IP 地址格式不正确
+        ui->message->append("Invalid IP Address "+userInput);
+    }
+
+    quint16 port = userport.toUInt();
+    if(isconnect ==true){
+        ui->message->append("client has connected to server!");
+        return;
+    }
+
+    p_socket->connectToHost(userInput,port,QIODevice::ReadWrite);
+
+
+    if(p_socket->waitForConnected()){
+        ui->message->append("connect server successfully!");
+        isconnect = true;
+    }else{
+        ui->message->append("connect server fail,timeout!");
+        isconnect = false;
+    }
+}
+
+
+
+
+
+
+void Client::on_disconnect_clicked()
+{
+    if(p_socket->isOpen()){
+        p_socket->close();
+        ui->message->append("close socket!");
+        isconnect = false;
+    }
+
+}
+
+
+//------------------------------------------------------------------------------
 void Client::message_display(){
-    ui->message->append(sourcefilepath+"  ------>  "+objectfolderpath);
+    ui->message->append(sourcefilepath+"  ------>  ");
     ui->message->append("copy Successfully!");
 }
