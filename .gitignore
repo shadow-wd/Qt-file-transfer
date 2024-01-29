@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+qt-file-transfer/build-server-Desktop*
+qt-file-transfer/build-client-Desktop*

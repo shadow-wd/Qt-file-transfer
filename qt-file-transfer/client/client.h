@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QTcpServer>
 #include <QTcpSocket>
-
+#include <QNetworkInterface>
 
 namespace Ui {
 class Client;
@@ -23,6 +23,8 @@ public:
     ~Client();
     QString sourcefilepath;
     void message_display();
+    void ondisconnect();
+    QString getlocaladdr();
 
 private slots:
     void on_selectFile_clicked();

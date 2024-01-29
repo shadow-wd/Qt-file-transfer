@@ -8,13 +8,14 @@ Client::Client(QWidget *parent) :
     ui->setupUi(this);
 
 
-    Client::p_socket = new QTcpSocket(this);
-
     // default config
     ui->ipaddr->setPlainText("172.16.151.129");
     ui->portnumber->setPlainText("6666");
 
     isconnect = false;
+    QString localipaddr = getlocaladdr();
+    setWindowTitle("Qtclient                      local host ipaddr: " + localipaddr);
+
 
 }
 
@@ -44,6 +45,10 @@ void Client::on_selectFile_clicked()
 
 void Client::on_copybutton_clicked()
 {
+    if(!isconnect){
+        ui->message->append("socket has disconnected!");
+        return;
+    }
     if(sourcefilepath.isEmpty()){
         ui->message->append("source file path is error!");
         return;
@@ -85,6 +90,7 @@ void Client::on_connect_clicked()
     if (!ipRegex.exactMatch(userInput)) {
         // IP 地址格式不正确
         ui->message->append("Invalid IP Address "+userInput);
+        return;
     }
 
     quint16 port = userport.toUInt();
@@ -92,6 +98,9 @@ void Client::on_connect_clicked()
         ui->message->append("client has connected to server!");
         return;
     }
+
+
+    p_socket = new QTcpSocket(this);
 
     p_socket->connectToHost(userInput,port,QIODevice::ReadWrite);
 
@@ -103,6 +112,9 @@ void Client::on_connect_clicked()
         ui->message->append("connect server fail,timeout!");
         isconnect = false;
     }
+
+    connect(this->p_socket,SIGNAL(disconnected()),this,SLOT(ondisconnect()));
+
 }
 
 
@@ -114,6 +126,7 @@ void Client::on_disconnect_clicked()
 {
     if(p_socket->isOpen()){
         p_socket->close();
+        p_socket->deleteLater();  // 删除套接字
         ui->message->append("close socket!");
         isconnect = false;
     }
@@ -121,8 +134,37 @@ void Client::on_disconnect_clicked()
 }
 
 
-//------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 void Client::message_display(){
     ui->message->append(sourcefilepath+"  ------>  ");
     ui->message->append("copy Successfully!");
+}
+
+
+void Client::ondisconnect(){
+    isconnect = false;
+    ui->message->append("socket disconnect!");
+
+}
+
+
+// 获取本地ip地址显示在标题
+QString Client::getlocaladdr(){
+    QList<QHostAddress> ipAddrList = QNetworkInterface::allAddresses();
+    QString localIpAddress;
+    foreach (QHostAddress address, ipAddrList) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback()) {
+            localIpAddress = address.toString();
+            break;
+        }
+    }
+
+    if (!localIpAddress.isEmpty()) {
+        qDebug() << "本地主机的IPv4地址：" << localIpAddress;
+    } else {
+        qDebug() << "未找到本地主机的IPv4地址";
+    }
+
+    return localIpAddress;
+
 }
