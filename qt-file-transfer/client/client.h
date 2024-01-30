@@ -16,17 +16,23 @@ class Client : public QMainWindow
 {
     Q_OBJECT
 
-    QTcpSocket *p_socket;
+
 
 public:
     explicit Client(QWidget *parent = nullptr);
     ~Client();
+    QTcpSocket *p_socket;
+
     QString sourcefilepath;
     void message_display();
-    void ondisconnect();
+
     QString getlocaladdr();
 
 private slots:
+
+    void ondisconnect();
+
+
     void on_selectFile_clicked();
 
     void on_copybutton_clicked();

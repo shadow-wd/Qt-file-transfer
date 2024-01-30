@@ -113,7 +113,7 @@ void Client::on_connect_clicked()
         isconnect = false;
     }
 
-    connect(this->p_socket,SIGNAL(disconnected()),this,SLOT(ondisconnect()));
+    connect(p_socket, SIGNAL(disconnected()), this, SLOT(ondisconnect()));
 
 }
 
