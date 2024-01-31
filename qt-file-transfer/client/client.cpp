@@ -7,17 +7,18 @@ Client::Client(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    p_socket = nullptr;
 
     // default config
     ui->ipaddr->setPlainText("172.16.151.129");
     ui->portnumber->setPlainText("6666");
 
-    isconnect = false;
     QString localipaddr = getlocaladdr();
     setWindowTitle("Qtclient                      local host ipaddr: " + localipaddr);
 
-
 }
+
+
 
 Client::~Client()
 {
@@ -45,10 +46,12 @@ void Client::on_selectFile_clicked()
 
 void Client::on_copybutton_clicked()
 {
-    if(!isconnect){
+
+    if(p_socket->state() == QAbstractSocket::ConnectedState){
         ui->message->append("socket has disconnected!");
         return;
     }
+
     if(sourcefilepath.isEmpty()){
         ui->message->append("source file path is error!");
         return;
@@ -94,10 +97,13 @@ void Client::on_connect_clicked()
     }
 
     quint16 port = userport.toUInt();
-    if(isconnect ==true){
+
+
+    if(isConnected() ==true){
         ui->message->append("client has connected to server!");
         return;
     }
+
 
 
     p_socket = new QTcpSocket(this);
@@ -107,14 +113,13 @@ void Client::on_connect_clicked()
 
     if(p_socket->waitForConnected()){
         ui->message->append("connect server successfully!");
-        isconnect = true;
     }else{
         ui->message->append("connect server fail,timeout!");
-        isconnect = false;
     }
 
     connect(p_socket, SIGNAL(disconnected()), this, SLOT(ondisconnect()));
-
+    connect(p_socket,SIGNAL(stateChanged(QAbstractSocket::SocketState)),this,SLOT(socketstatechange(QAbstractSocket::SocketState)));
+    socketstatechange(p_socket->state());
 }
 
 
@@ -128,7 +133,35 @@ void Client::on_disconnect_clicked()
         p_socket->close();
         p_socket->deleteLater();  // 删除套接字
         ui->message->append("close socket!");
-        isconnect = false;
+    }
+
+}
+
+
+void Client::socketstatechange(QAbstractSocket::SocketState state){
+
+    switch (state) {
+        case QAbstractSocket::UnconnectedState:
+            ui->socketstate->setText("UnconnectedState");
+            break;
+        case QAbstractSocket::HostLookupState:
+        ui->socketstate->setText("HostLookupState");
+        break;
+        case QAbstractSocket::ConnectingState:
+            ui->socketstate->setText("ConnectingState");
+            break;
+        case QAbstractSocket::ConnectedState:
+        ui->socketstate->setText("ConnectedState");
+        break;
+        case QAbstractSocket::BoundState:
+            ui->socketstate->setText("BoundState");
+            break;
+        case QAbstractSocket::ClosingState:
+        ui->socketstate->setText("ClosingState");
+        break;
+        case QAbstractSocket::ListeningState:
+            ui->socketstate->setText("ListeningState");
+            break;
     }
 
 }
@@ -142,7 +175,6 @@ void Client::message_display(){
 
 
 void Client::ondisconnect(){
-    isconnect = false;
     ui->message->append("socket disconnect!");
 
 }
@@ -167,4 +199,16 @@ QString Client::getlocaladdr(){
 
     return localIpAddress;
 
+}
+
+//socket建立且已连接就返回true ，否则返回false
+bool Client::isConnected(){
+
+    if(!p_socket){
+        return false;
+    }
+    if(p_socket->state() != QAbstractSocket::ConnectedState){
+        return false;
+    }
+    return true;
 }

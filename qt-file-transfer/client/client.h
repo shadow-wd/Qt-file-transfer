@@ -7,6 +7,8 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QNetworkInterface>
+#include <QAbstractSocket>
+
 
 namespace Ui {
 class Client;
@@ -28,10 +30,13 @@ public:
 
     QString getlocaladdr();
 
+    bool isConnected();
+
 private slots:
 
     void ondisconnect();
 
+    void socketstatechange(QAbstractSocket::SocketState state);
 
     void on_selectFile_clicked();
 
@@ -46,7 +51,6 @@ private slots:
 private:
     Ui::Client *ui;
 
-    bool isconnect;
 };
 
 #endif // CLIENT_H
