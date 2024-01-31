@@ -24,14 +24,10 @@ public:
 
     QTcpServer *p_server;
     QTcpSocket *p_socket;
-
-
-
+    QString sourcefilepath;
 
 
 private slots:
-
-    void on_openfile_clicked();
 
     void on_closeconnect_clicked();
 
@@ -47,10 +43,16 @@ private slots:
 
     void socketstatechange(QAbstractSocket::SocketState state);
 
+    void on_selectfile_clicked();
+
+    void on_sendfile_clicked();
+
 private:
     Ui::server *ui;
 
     bool isConnect;
+
+
     QString getlocaladdr();
 };
 

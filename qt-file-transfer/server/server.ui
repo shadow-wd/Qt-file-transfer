@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>510</height>
+    <width>707</width>
+    <height>508</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -20,17 +20,17 @@
    <widget class="QTextBrowser" name="message">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>30</x>
       <y>10</y>
       <width>651</width>
       <height>192</height>
      </rect>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser_3">
+   <widget class="QTextBrowser" name="filepathdisplay">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>30</x>
       <y>320</y>
       <width>641</width>
       <height>31</height>
@@ -40,7 +40,7 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>30</x>
       <y>220</y>
       <width>651</width>
       <height>81</height>
@@ -79,7 +79,7 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>30</x>
       <y>370</y>
       <width>651</width>
       <height>41</height>
@@ -100,14 +100,34 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="openfile">
+      <widget class="QPushButton" name="selectfile">
        <property name="text">
-        <string>open file</string>
+        <string>select file</string>
        </property>
       </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="sendfile">
+       <property name="text">
+        <string>send</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -150,7 +170,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>750</width>
+     <width>707</width>
      <height>23</height>
     </rect>
    </property>
@@ -161,8 +181,8 @@
   <tabstop>message</tabstop>
   <tabstop>clearmessage</tabstop>
   <tabstop>closeconnect</tabstop>
-  <tabstop>textBrowser_3</tabstop>
-  <tabstop>openfile</tabstop>
+  <tabstop>filepathdisplay</tabstop>
+  <tabstop>selectfile</tabstop>
  </tabstops>
  <resources/>
  <connections/>

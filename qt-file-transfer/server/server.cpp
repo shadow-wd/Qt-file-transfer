@@ -24,13 +24,6 @@ server::~server()
 }
 
 
-void server::on_openfile_clicked()
-{
-
-}
-
-
-
 void server::on_closeconnect_clicked()
 {
     if(p_socket->isOpen()){
@@ -59,7 +52,6 @@ void server::acceptconnect(){
 
 void server::ondisconnect(){
     ui->message->append("socket disconnect!");
-
 }
 
 
@@ -148,4 +140,50 @@ bool server::isConnected(){
         return false;
     }
     return true;
+}
+
+
+void server::on_selectfile_clicked()
+{
+    sourcefilepath = QFileDialog::getOpenFileName(
+                                this,
+                                tr("选择源文件:"),
+                                QDir::homePath(),
+                                tr("文本文件 (*.txt);;所有文件 (*)")
+                                );
+
+    if(!sourcefilepath.isEmpty()){
+        ui->filepathdisplay->setText(sourcefilepath);
+    }
+}
+
+
+void server::on_sendfile_clicked()
+{
+    if(isConnected() != true){
+        ui->message->append("socket has disconnected!");
+        return;
+    }
+
+    if(sourcefilepath.isEmpty()){
+        ui->message->append("source file path is error!");
+        return;
+    }
+
+    QFile sourceFile(sourcefilepath);
+
+    if(sourceFile.open(QIODevice::ReadOnly)){
+
+        while (!sourceFile.atEnd()) {
+            QByteArray data = sourceFile.read(1024);  // 读取数据块
+            p_socket->write(data);          // 发送数据
+        }
+
+        sourceFile.close();
+    }else{
+        qDebug("source file open fail\n");
+        return;
+    }
+    ui->message->append(sourcefilepath+"  ------>  ");
+    ui->message->append("copy Successfully!");
 }

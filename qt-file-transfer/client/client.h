@@ -9,7 +9,6 @@
 #include <QNetworkInterface>
 #include <QAbstractSocket>
 
-
 namespace Ui {
 class Client;
 }
@@ -35,6 +34,8 @@ public:
 private slots:
 
     void ondisconnect();
+
+    void receiveData();
 
     void socketstatechange(QAbstractSocket::SocketState state);
 

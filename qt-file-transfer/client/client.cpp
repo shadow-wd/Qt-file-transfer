@@ -18,14 +18,11 @@ Client::Client(QWidget *parent) :
 
 }
 
-
-
 Client::~Client()
 {
     delete ui;
     sourcefilepath="";
 }
-
 
 void Client::on_selectFile_clicked()
 {
@@ -47,7 +44,7 @@ void Client::on_selectFile_clicked()
 void Client::on_copybutton_clicked()
 {
 
-    if(p_socket->state() == QAbstractSocket::ConnectedState){
+    if(isConnected() != true){
         ui->message->append("socket has disconnected!");
         return;
     }
@@ -117,6 +114,7 @@ void Client::on_connect_clicked()
         ui->message->append("connect server fail,timeout!");
     }
 
+    connect(p_socket,SIGNAL(readyRead()),this,SLOT(receiveData()));
     connect(p_socket, SIGNAL(disconnected()), this, SLOT(ondisconnect()));
     connect(p_socket,SIGNAL(stateChanged(QAbstractSocket::SocketState)),this,SLOT(socketstatechange(QAbstractSocket::SocketState)));
     socketstatechange(p_socket->state());
@@ -125,6 +123,21 @@ void Client::on_connect_clicked()
 
 
 
+void Client::receiveData(){
+    QFile file("C:/Users/dong.wang/Desktop/file.txt");
+
+
+    if (file.open(QIODevice::WriteOnly)) {
+        // 从套接字接收数据并写入文件
+        while (p_socket->bytesAvailable() > 0) {
+
+            QByteArray data = p_socket->read(1024);  // 读取数据
+            file.write(data);                      // 写入文件
+        }
+        file.close();
+        ui->message->append("receive file successfully!");
+    }
+}
 
 
 void Client::on_disconnect_clicked()
