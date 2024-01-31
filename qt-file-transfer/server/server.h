@@ -7,7 +7,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileDialog>
-
+#include <QAbstractSocket>
+#include <QNetworkInterface>
 
 namespace Ui {
 class server;
@@ -42,10 +43,15 @@ private slots:
 
     void on_clearmessage_clicked();
 
+    bool isConnected();
+
+    void socketstatechange(QAbstractSocket::SocketState state);
+
 private:
     Ui::server *ui;
 
     bool isConnect;
+    QString getlocaladdr();
 };
 
 #endif // SERVER_H

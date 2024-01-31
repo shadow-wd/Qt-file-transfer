@@ -7,13 +7,14 @@ server::server(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    isConnect = false;
-
+    p_socket = nullptr;
     server::p_server = new QTcpServer(this);
 
     this->p_server->listen(QHostAddress::Any,6666);
     connect(this->p_server,SIGNAL(newConnection()),this,SLOT(acceptconnect()));
 
+    QString localipaddr = getlocaladdr();
+    setWindowTitle("Qtserver                      local host ipaddr: " + localipaddr);
 }
 
 
@@ -47,16 +48,16 @@ void server::acceptconnect(){
 
     connect(p_socket,SIGNAL(readyRead()),this,SLOT(receiveData()));
     connect(this->p_socket,SIGNAL(disconnected()),this,SLOT(ondisconnect()));
+    connect(p_socket,SIGNAL(stateChanged(QAbstractSocket::SocketState)),this,SLOT(socketstatechange(QAbstractSocket::SocketState)));
+    socketstatechange(p_socket->state());
 
 
-    isConnect = true;
     ui->message->append("socket connect!");
 
 }
 
 
 void server::ondisconnect(){
-    isConnect = false;
     ui->message->append("socket disconnect!");
 
 }
@@ -80,8 +81,71 @@ void server::receiveData(){
 }
 
 
+
+void server::socketstatechange(QAbstractSocket::SocketState state){
+
+    switch (state) {
+        case QAbstractSocket::UnconnectedState:
+            ui->socketstate->setText("UnconnectedState");
+            break;
+        case QAbstractSocket::HostLookupState:
+        ui->socketstate->setText("HostLookupState");
+        break;
+        case QAbstractSocket::ConnectingState:
+            ui->socketstate->setText("ConnectingState");
+            break;
+        case QAbstractSocket::ConnectedState:
+        ui->socketstate->setText("ConnectedState");
+        break;
+        case QAbstractSocket::BoundState:
+            ui->socketstate->setText("BoundState");
+            break;
+        case QAbstractSocket::ClosingState:
+        ui->socketstate->setText("ClosingState");
+        break;
+        case QAbstractSocket::ListeningState:
+            ui->socketstate->setText("ListeningState");
+            break;
+    }
+
+}
+
+
 void server::on_clearmessage_clicked()
 {
     ui->message->clear();
 }
 
+//------------------------------------------------------------------------------------------------
+// 获取本地ip地址显示在标题
+QString server::getlocaladdr(){
+    QList<QHostAddress> ipAddrList = QNetworkInterface::allAddresses();
+    QString localIpAddress;
+    foreach (QHostAddress address, ipAddrList) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback()) {
+            localIpAddress = address.toString();
+            break;
+        }
+    }
+
+    if (!localIpAddress.isEmpty()) {
+        qDebug() << "本地主机的IPv4地址：" << localIpAddress;
+    } else {
+        qDebug() << "未找到本地主机的IPv4地址";
+    }
+
+    return localIpAddress;
+
+}
+
+//socket建立且已连接就返回true ，否则返回false
+bool server::isConnected(){
+
+    if(!p_socket){
+        return false;
+    }
+    if(p_socket->state() != QAbstractSocket::ConnectedState){
+        return false;
+    }
+    return true;
+}

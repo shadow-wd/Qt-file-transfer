@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>360</y>
+      <y>320</y>
       <width>641</width>
       <height>31</height>
      </rect>
@@ -41,7 +41,7 @@
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>240</y>
+      <y>220</y>
       <width>651</width>
       <height>81</height>
      </rect>
@@ -80,7 +80,7 @@
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>410</y>
+      <y>370</y>
       <width>651</width>
       <height>41</height>
      </rect>
@@ -120,6 +120,29 @@
       </spacer>
      </item>
     </layout>
+   </widget>
+   <widget class="QTextBrowser" name="socketstate">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>420</y>
+      <width>291</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>430</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>socket state</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
