@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>707</width>
-    <height>508</height>
+    <width>712</width>
+    <height>446</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -17,40 +17,26 @@
    <string>Qtserver</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTextBrowser" name="message">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>651</width>
-      <height>192</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="filepathdisplay">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>320</y>
-      <width>641</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>220</y>
-      <width>651</width>
-      <height>81</height>
+      <x>9</x>
+      <y>124</y>
+      <width>402</width>
+      <height>25</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="leftMargin">
+      <number>100</number>
+     </property>
+     <property name="rightMargin">
+      <number>100</number>
+     </property>
      <item>
-      <widget class="QPushButton" name="clearmessage">
+      <widget class="QPushButton" name="closeconnect">
        <property name="text">
-        <string>clear</string>
+        <string>close</string>
        </property>
       </widget>
      </item>
@@ -68,9 +54,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="closeconnect">
+      <widget class="QPushButton" name="clearmessage">
        <property name="text">
-        <string>close</string>
+        <string>clear</string>
        </property>
       </widget>
      </item>
@@ -79,10 +65,10 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>370</y>
-      <width>651</width>
-      <height>41</height>
+      <x>9</x>
+      <y>273</y>
+      <width>691</width>
+      <height>25</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -141,28 +127,127 @@
      </item>
     </layout>
    </widget>
-   <widget class="QTextBrowser" name="socketstate">
+   <widget class="QWidget" name="horizontalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>420</y>
-      <width>291</width>
-      <height>41</height>
+      <x>9</x>
+      <y>177</y>
+      <width>694</width>
+      <height>53</height>
      </rect>
     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QTextBrowser" name="filepathdisplay"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QWidget" name="horizontalLayoutWidget_5">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>430</y>
-      <width>81</width>
-      <height>20</height>
+      <x>9</x>
+      <y>36</y>
+      <width>694</width>
+      <height>53</height>
      </rect>
     </property>
-    <property name="text">
-     <string>socket state</string>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QTextBrowser" name="message"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_8">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>332</y>
+      <width>691</width>
+      <height>31</height>
+     </rect>
     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="rightMargin">
+      <number>400</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>socket state</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextBrowser" name="socketstate"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -170,7 +255,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>707</width>
+     <width>712</width>
      <height>23</height>
     </rect>
    </property>
@@ -178,10 +263,6 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>message</tabstop>
-  <tabstop>clearmessage</tabstop>
-  <tabstop>closeconnect</tabstop>
-  <tabstop>filepathdisplay</tabstop>
   <tabstop>selectfile</tabstop>
  </tabstops>
  <resources/>

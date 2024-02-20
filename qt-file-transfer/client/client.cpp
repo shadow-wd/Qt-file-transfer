@@ -10,7 +10,7 @@ Client::Client(QWidget *parent) :
     p_socket = nullptr;
 
     // default config
-    ui->ipaddr->setPlainText("172.16.151.129");
+    ui->ipaddr->setPlainText("");
     ui->portnumber->setPlainText("6666");
 
     QString localipaddr = getlocaladdr();
